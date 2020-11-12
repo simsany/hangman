@@ -24,6 +24,7 @@ usedLetters = set()
 message = ""
 stage = []
 hint = 0
+language_choice = ['en', 'it', 'fr', 'es', 'hu']
 muted = False
 pics = ['''
   +---+
@@ -298,10 +299,7 @@ def hint_question(word, char, lives):
         for index, letter in enumerate(word):
             if letter.casefold() not in globals()['stage']:
                 hat[index] = letter
-
-        randNum = random.randint(0, len(hat.keys())-1)
-        key = list(hat.keys())
-        key = key[randNum]
+        key = random.choice(list(hat.keys()))
         char = hat[key]
 
         globals()['hint'] += 1
@@ -486,7 +484,7 @@ def game_start():
         lang = input()
         mute(lang, lives)
         quit(lang)
-        if lang.lower() == 'en' or lang.lower() == 'it' or lang.lower() == 'fr' or lang.lower() == 'es' or lang.lower() == 'hu':
+        if lang.lower() in globals()['language_choice']:
             globals()['lang'] = lang.lower()
             globals()['words'] = read_words(globals()['lang'])
 
@@ -505,9 +503,9 @@ def game_start():
         quit(difficulty)
         lives = difficulty_choose(difficulty)
 
-    pickedWord = globals()['words'][random.randint(
-        0, len(globals()['words'])-1)]
-    globals()['word'] = pickedWord
+    
+    globals()['word'] = random.choice(globals()['words'])
+    pickedWord=globals()['word'] 
 
     game_play(pickedWord, lives)
 
